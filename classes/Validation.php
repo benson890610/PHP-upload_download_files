@@ -3,32 +3,36 @@
     class Validation {
 
         private $unallowedFiles = ['php', 'js'];
+        private $maxAllowedSize = 1000000;
+        private $errors = [];
+        private $success = '';
 
-         public function notSubmited($files) {
+        public function notSubmited($files) {
             return empty($files['name'][0]);
-         }
+        }
 
-         public function storMessage(string $type, string $message) {
+        public function storMessage(string $type, string $message) {
 
             if($type === 'error') {
-                $class = 'alert alert-danger';
+                array_push($this->errors, $message);
             } else {
-                $class = 'alert alert-success';
+                $this->success = $message;
             }
-            
-            $messages = implode('<br>', $messages);
-            
-            $_SESSION['msg'] = "<div class='". $class ."'>". $messages ."</div>";
 
-         }
+        }
 
-         public function unauthorize($file) {
-            $fileExt = pathinfo($file->__get('name'), PATHINFO_EXTENSION);
-            
+        public function unauthorize($file) {
+            $fileExt = pathinfo($file->__get('name'), PATHINFO_EXTENSION); 
             return in_array($fileExt, $this->unallowedFiles);
-         }
+        }
 
-         public static function showMessage() {
+        public function size($file) {
+
+            return $file->__get('size') > $this->maxAllowedSize;
+
+        }
+
+        public static function showMessage() {
 
             if(isset($_SESSION['msg'])) {
                 $message = $_SESSION['msg'];
@@ -38,6 +42,14 @@
             }
 
             return '';
-         }
+        }
 
+        public function __get($property) {
+            if(property_exists($this, $property)) {
+                return $this->$property;
+            } else {
+                $error = __CLASS__ . " " . $property . " property does not exists";
+                die($error);
+            }
+        }
     }
