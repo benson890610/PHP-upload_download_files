@@ -2,11 +2,13 @@
 
     class Validation {
 
+        private $unallowedFiles = ['php', 'js'];
+
          public function notSubmited($files) {
             return empty($files['name'][0]);
          }
 
-         public function message(string $type, array $messages) {
+         public function storMessage(string $type, string $message) {
 
             if($type === 'error') {
                 $class = 'alert alert-danger';
@@ -18,8 +20,12 @@
             
             $_SESSION['msg'] = "<div class='". $class ."'>". $messages ."</div>";
 
-            $this->redirect('index');
+         }
 
+         public function unauthorize($file) {
+            $fileExt = pathinfo($file->__get('name'), PATHINFO_EXTENSION);
+            
+            return in_array($fileExt, $this->unallowedFiles);
          }
 
          public static function showMessage() {
@@ -32,11 +38,6 @@
             }
 
             return '';
-         }
-
-         private function redirect($page) {
-            header('Location: ' . $page . '.php');
-            exit;
          }
 
     }
