@@ -16,4 +16,13 @@
             }
         }
 
+        public function __get($property) {
+            if(property_exists($this, $property)) {
+                return $this->$property;
+            } else {
+                $error = __CLASS__ . " " . $property . " property does not exists";
+                die($error);
+            }
+        }
+
     }
