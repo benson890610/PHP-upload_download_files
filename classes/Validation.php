@@ -3,20 +3,19 @@
     class Validation {
 
         private $unallowedFiles = ['php', 'js'];
-        private $maxAllowedSize = 1000000;
-        private $errors = [];
-        private $success = '';
+        private $error = [];
+        private $success = [];
 
         public function notSubmited($files) {
             return empty($files['name'][0]);
         }
 
-        public function storMessage(string $type, string $message) {
+        public function storeMessage(string $type, string $message) {
 
             if($type === 'error') {
-                array_push($this->errors, $message);
+                array_push($this->error, $message);
             } else {
-                $this->success = $message;
+                array_push($this->success, $message);
             }
 
         }
@@ -26,10 +25,8 @@
             return in_array($fileExt, $this->unallowedFiles);
         }
 
-        public function size($file) {
-
-            return $file->__get('size') > $this->maxAllowedSize;
-
+        public function bigsize($file) {
+            return $file->__get('size') > $file->__get('maxSize');
         }
 
         public static function showMessage() {
@@ -42,6 +39,15 @@
             }
 
             return '';
+        }
+
+        public function __set($property, $value) {
+            if(property_exists($this, $property)) {
+                $this->$property = $value;
+            } else {
+                $error = __CLASS__ . " " . $property . " property does not exists";
+                die($error);
+            }
         }
 
         public function __get($property) {
