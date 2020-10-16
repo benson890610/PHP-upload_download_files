@@ -19,7 +19,9 @@
         }
 
         public function getMessages() {
+            if(count($this->error) > 0)
             $error   = array_map(function($item){ return '<div class="alert alert-danger">'.$item.'</div>'; }, $this->error);
+            if(count($this->success) > 0)
             $success = array_map(function($item){ return '<div class="alert alert-success">'.$item.'</div>'; }, $this->success);
             $messages = array_merge($error, $success);
             return $messages;
@@ -32,18 +34,6 @@
 
         public function bigsize($file) {
             return $file->__get('size') > $file->__get('maxSize');
-        }
-
-        public static function showMessage() {
-
-            if(isset($_SESSION['msg'])) {
-                $message = $_SESSION['msg'];
-                unset($_SESSION['msg']);
-                
-                return $message;
-            }
-
-            return '';
         }
 
         public function __set($property, $value) {
