@@ -2,6 +2,7 @@
 
 interface FilesInterface {
     public function createUploadFiles();
+    public function displayLinks();
 }
 
 interface FileInterface {
