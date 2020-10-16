@@ -11,13 +11,18 @@
         }
 
         public function storeMessage(string $type, string $message) {
-
             if($type === 'error') {
                 array_push($this->error, $message);
             } else {
                 array_push($this->success, $message);
             }
+        }
 
+        public function getMessages() {
+            $error   = array_map(function($item){ return '<div class="alert alert-danger">'.$item.'</div>'; }, $this->error);
+            $success = array_map(function($item){ return '<div class="alert alert-success">'.$item.'</div>'; }, $this->success);
+            $messages = array_merge($error, $success);
+            return $messages;
         }
 
         public function unauthorize($file) {
