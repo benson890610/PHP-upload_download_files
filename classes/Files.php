@@ -25,19 +25,19 @@ class Files implements FilesInterface {
             for($i = 0; $i < $totalFiles; $i++) {
 
                 $file = $this->createFile($i);
-                
-                if($validate->unauthorize($file)) $validate->storeMessage("error", "<strong>" . $file->__get('name') . "</strong> is not allowed to upload");
-
-                else if($validate->size($file)) {
-                    $maxSize = $file->__get('maxSize') / 1000000;
-                    $validate->storeMessage("error", "<strong>" . $file->__get('name') . "</strong> has exceeded maximum allowed size of $maxSize Mb");
-                }
-
-                else {
-                    $validate->storeMessage('success', $file->__get('name') . ' has been uploded');
+                if($validate->unauthorize($file)) {
+                    $validate->storeMessage('error', $file->__get('name') . ' is not allowed for upload');
+                } elseif($validate->bigsize($file)) {
+                    $validate->storeMessage('error', $file->__get('name') . ' has exceeded ' . ($file->__get('maxSize') / 1000000) . 'Mb size');
+                } else {
+                    $file->save();
+                    $validate->storeMessage('success', $file->__get('name') . ' has been uploaded');
                 }
 
             }
+
+            
+            
         }
     }
 
