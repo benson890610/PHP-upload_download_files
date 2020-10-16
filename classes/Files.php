@@ -29,7 +29,7 @@ class Files implements FilesInterface {
                     $validate->storeMessage('error', $file->__get('name') . ' has exceeded ' . ($file->__get('maxSize') / 1000000) . 'Mb size');
                 } else {
                     $file->save();
-                    //$file->upload();
+                    $file->upload();
                     $validate->storeMessage('success', $file->__get('name') . ' has been uploaded');
                 }
 

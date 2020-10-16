@@ -25,7 +25,7 @@
         }
 
         public function upload() {
-
+            
         }
 
         public function __set($property, $value) {
