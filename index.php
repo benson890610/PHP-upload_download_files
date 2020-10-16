@@ -1,6 +1,6 @@
 <?php
     ini_set('display_errors', 'on');
-    session_start(); 
+    session_start();
     require 'classes/Validation.php';
 ?>
 
