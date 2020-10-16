@@ -29,11 +29,13 @@ class Files implements FilesInterface {
                 if($validate->unauthorize($file)) $validate->storeMessage("error", "<strong>" . $file->__get('name') . "</strong> is not allowed to upload");
 
                 else if($validate->size($file)) {
-                    $maxSize = $validate->__get('maxAllowedSize') / 1000000;
+                    $maxSize = $file->__get('maxSize') / 1000000;
                     $validate->storeMessage("error", "<strong>" . $file->__get('name') . "</strong> has exceeded maximum allowed size of $maxSize Mb");
                 }
 
-                die();
+                else {
+                    $validate->storeMessage('success', $file->__get('name') . ' has been uploded');
+                }
 
             }
         }
@@ -42,7 +44,11 @@ class Files implements FilesInterface {
     private function createFile($i) {
         
         $file = new File;
-        $file->__set('name',     $this->files['name'][$i]);
+
+        $filename = pathinfo($this->files['name'][$i], PATHINFO_FILENAME);
+        $ext = pathinfo($this->files['name'][$i], PATHINFO_EXTENSION);
+
+        $file->__set('name',     $filename . '_' . time() . '.' . $ext);
         $file->__set('tmp_name', $this->files['tmp_name'][$i]);
         $file->__set('type',     $this->files['type'][$i]);
         $file->__set('size',     $this->files['size'][$i]);
