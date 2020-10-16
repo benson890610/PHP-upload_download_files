@@ -1,7 +1,7 @@
 <?php
     ini_set('display_errors', 'on');
     session_start();
-    require 'classes/Validation.php';
+    require 'helpers.php';
 ?>
 
 <!doctype html>
@@ -21,7 +21,7 @@
         <div class="container">
             <h1 class="text-center mt-5">Upload and Download files</h1>
 
-            <?php echo Validation::showMessage(); ?>
+            <?php echo messages(); ?>
 
             <form action="proccess.php" method="post" enctype="multipart/form-data" class="mt-5">
                 <div class="form-group">
