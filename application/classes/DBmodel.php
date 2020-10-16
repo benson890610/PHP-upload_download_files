@@ -22,6 +22,11 @@
             $this->db->prepare($sql);
             $this->db->execute([$name, $type, $size]);
 
-        } 
+        }
+
+        public function all() {
+            $sql = "SELECT id, name FROM files";
+            return $this->db->queryAll($sql);
+        }
 
     }
