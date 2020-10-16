@@ -4,15 +4,18 @@ require 'File.php';
 
 class Files implements FilesInterface {
 
+    private $db;
     private $files = [];
     private $maxUploadFiles = 5;
 
     public function __construct() {
-        $this->files = $_FILES['files'];
+        $this->db = new DBmodel;
     }
 
     public function createUploadFiles() {
+        $this->files = $_FILES['files'];
         $validate = new Validation;
+
         // Client has not choosed an image
         if($validate->notSubmited($this->files)) {
             $validate->storeMessage('error', 'Please choose a file for upload');
@@ -47,6 +50,13 @@ class Files implements FilesInterface {
         $messages = $validate->getMessages();
         session($messages);
         redirect('index');
+    }
+
+    public function displayLinks() {
+        $files = $this->db->all();
+        $htmlFiles = [];
+        $htmlFiles = array_map(function($file){ return "<li class='list-group-item'><a href='proccess.php?file=". $file['id'] ."'>". $file['name'] ."</a></li>"; }, $files);
+        return implode('', $htmlFiles);
     }
 
     private function createFile($i) {
