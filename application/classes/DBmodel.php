@@ -7,13 +7,10 @@
         private $db;
 
         public function __construct() {
-
             $this->db = new Database;
-
         }
 
-        public function save(string $name, string $type, int $size) {
-
+        public function persist(string $name, string $type, int $size) {
             $sql = "INSERT INTO files
                     SET
                         name = ?,
@@ -21,7 +18,14 @@
                         size = ?";
             $this->db->prepare($sql);
             $this->db->execute([$name, $type, $size]);
+        }
 
+        public function findSingle($id) {
+            $sql = "SELECT * FROM files WHERE id = ?";
+            $this->db->prepare($sql);
+            $this->db->execute([$id]);
+
+            return $this->db->single();
         }
 
         public function all() {
