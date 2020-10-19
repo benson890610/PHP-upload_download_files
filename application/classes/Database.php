@@ -2,12 +2,12 @@
 
     class Database {
 
-        private $driver = 'mysql';
-        private $host = 'localhost';
-        private $user = 'igor.djurdjic';
-        private $pass = '11111111';
-        private $name = 'phpsample';
-        private $char = 'utf8mb4';
+        private $driver = '__database_driver__';
+        private $host = '__host__';
+        private $user = '__username__';
+        private $pass = '__password__';
+        private $name = '__database__';
+        private $char = '__database_char__';
 
         private $dbh;
         private $stmt;
