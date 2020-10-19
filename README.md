@@ -12,7 +12,7 @@ Files whos extensions are js or php are not allowed<br><br>
 ### Download Requirements
 
 Each file is represented as link in home page
-Click on link to strart downloading file
+Click on link to download file
 
 ### Htaccess
 
