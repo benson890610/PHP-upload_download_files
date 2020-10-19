@@ -7,4 +7,6 @@ interface FilesInterface {
 
 interface FileInterface {
     public function save();
+    public function upload();
+    public function download();
 }
