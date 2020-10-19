@@ -1,7 +1,13 @@
 <?php
     ini_set('display_errors', 'on');
     session_start();
-    require 'helpers.php';
+    require 'application/interfaces/ClassInterfaces.php';
+    require 'application/helpers.php';
+    spl_autoload_register(function($className){
+        if(file_exists('application/classes/' . $className . '.php')) {
+            require 'application/classes/' . $className . '.php';
+        }
+    });
 ?>
 
 <!doctype html>
@@ -14,7 +20,7 @@
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
 
-        <title>U&D</title>
+        <title>Upload &amp; Download files</title>
     </head>
     <body>
 
@@ -38,10 +44,10 @@
             <div class="row mt-5">
                 <div class="col-md-8 col-lg-8 mx-auto">
                     <ul class="list-group mt-5">
-                        <li class="list-group-item">File one for downloading content</li>
-                        <li class="list-group-item">File two for downloading content</li>
-                        <li class="list-group-item">File three for downloading content</li>
-                        <li class="list-group-item">File four for downloading content</li>
+                        <?php 
+                            $files = new Files;
+                            echo $files->showFiles(); 
+                        ?>
                     </ul>
                 </div>
             </div>
