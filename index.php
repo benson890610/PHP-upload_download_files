@@ -1,5 +1,4 @@
 <?php
-    ini_set('display_errors', 'on');
     session_start();
     require 'application/interfaces/ClassInterfaces.php';
     require 'application/helpers.php';
